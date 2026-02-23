@@ -22,30 +22,22 @@ local enableddam = true
 local Mouse, mouse, UserInputService, ContextActionService = ScriptUtilities.attachInputBridge(Player)
 
 
-local legacyMainParts = {
-	script.Modules.LegacyMainPart_01,
-	script.Modules.LegacyMainPart_02,
-	script.Modules.LegacyMainPart_03,
-	script.Modules.LegacyMainPart_04,
-	script.Modules.LegacyMainPart_05,
-	script.Modules.LegacyMainPart_06,
-	script.Modules.LegacyMainPart_07,
-	script.Modules.LegacyMainPart_08,
-	script.Modules.LegacyMainPart_09,
-	script.Modules.LegacyMainPart_10,
-	script.Modules.LegacyMainPart_11,
-	script.Modules.LegacyMainPart_12,
+local mainChunkModules = {
+	script.Modules.MainScriptChunk_01,
+	script.Modules.MainScriptChunk_02,
+	script.Modules.MainScriptChunk_03,
+	script.Modules.MainScriptChunk_04,
 }
 
-local legacySourceParts = table.create(#legacyMainParts)
-for index, moduleScript in ipairs(legacyMainParts) do
-	legacySourceParts[index] = require(moduleScript)
+local mainScriptSourceParts = table.create(#mainChunkModules)
+for index, moduleScript in ipairs(mainChunkModules) do
+	mainScriptSourceParts[index] = require(moduleScript)
 end
 
-local legacyChunk, compileError = loadstring(table.concat(legacySourceParts))
-if not legacyChunk then
+local mainScriptChunk, compileError = loadstring(table.concat(mainScriptSourceParts))
+if not mainScriptChunk then
 	error(compileError)
 end
 
-setfenv(legacyChunk, sharedEnv)
-legacyChunk()
+setfenv(mainScriptChunk, sharedEnv)
+mainScriptChunk()
